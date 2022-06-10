@@ -1,6 +1,11 @@
 import React from "react";
 import Home from "./pages/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NotFound from "./pages/NotFound";
+import Signin from "./pages/Signin";
+import Add from "./pages/Add";
+import Detail from "./pages/Detail";
+import Edit from "./pages/Edit";
 function App() {
   return (
     <BrowserRouter>
