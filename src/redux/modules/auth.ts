@@ -1,6 +1,8 @@
 import { Action } from "redux";
 import { createActions, handleActions } from "redux-actions";
-import { takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
+import TokenService from "../../services/TokenService";
+import UserService from "../../services/UserService";
 import { LoginReqType } from "../../types";
 
 interface AuthState {
@@ -51,7 +53,18 @@ export default reducer;
 // saga
 export const { login, logout } = createActions("LOGIN", "LOGOUT", { prefix });
 
-function* loginSaga(action: Action<LoginReqType>) {}
+function* loginSaga(action: any) {
+  try {
+    yield put(pending());
+    const token: string = yield call(UserService.login, action.payload);
+    // local storage에 받아온 token 넣기
+    TokenService.set(token);
+    yield put(success(token));
+    // push
+  } catch (error) {
+    yield put(fail(new Error("ERROR")));
+  }
+}
 
 function* logoutSaga() {}
 
