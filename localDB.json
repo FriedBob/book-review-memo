@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "email": "test@naver.com",
+      "password": "password",
+      "token": "aaa"
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "testpassword",
+      "token": "bbb"
+    }
+  ]
+}

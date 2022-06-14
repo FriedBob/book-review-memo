@@ -1,3 +1,4 @@
+import { push } from "connected-react-router";
 import { Action } from "redux";
 import { createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
@@ -57,10 +58,12 @@ function* loginSaga(action: any) {
   try {
     yield put(pending());
     const token: string = yield call(UserService.login, action.payload);
-    // local storage에 받아온 token 넣기
+    // local storage에 받아온 token 넣기, 아이디비번 불일치시 "undefined"라는 string값이 나옴
     TokenService.set(token);
     yield put(success(token));
-    // push
+    // history push
+    yield put(push("/"));
+    console.log(`received token : ${token}`);
   } catch (error) {
     yield put(fail(new Error("ERROR")));
   }
