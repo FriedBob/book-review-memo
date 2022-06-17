@@ -1,12 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { logout } from "../redux/modules/auth";
+import ListContainer from "../containers/ListContainer";
+
 import { RootState } from "../types";
 
 export default function Home() {
-  const dispatch = useDispatch();
   const token = useSelector<RootState, string | null>(
     (state) => state.auth.token
   );
@@ -15,14 +14,5 @@ export default function Home() {
     return <Navigate to="/signin" />;
   }
 
-  return (
-    <div>
-      <h1>Home</h1>
-      <button onClick={click}>logout</button>
-    </div>
-  );
-
-  function click() {
-    dispatch(logout());
-  }
+  return <ListContainer />;
 }

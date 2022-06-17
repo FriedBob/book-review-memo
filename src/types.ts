@@ -6,8 +6,15 @@ export type LoginReqType = {
   password: string;
 };
 
+export interface BooksState {
+  books: BookType[] | null;
+  loading: boolean;
+  error: Error | null;
+}
+
 export interface RootState {
   auth: AuthState;
+  books: BooksState;
   router: Reducer<RouterState<unknown>, AnyAction>;
 }
 
@@ -16,3 +23,5 @@ export interface AuthState {
   loading: boolean;
   error: Error | null;
 }
+
+export interface BookType {}
