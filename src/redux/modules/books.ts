@@ -3,6 +3,14 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 import BookService from "../../services/BookService";
 import { BooksState, BookType } from "../../types";
 
+// 작동여부 판단을 위한 임시 title(책 제목)값 고정
+const title: string = "스티브 잡스";
+
+interface ResponseType {
+  documents: [];
+  // meta: {};
+}
+
 const initialState: BooksState = {
   books: null,
   loading: false,
@@ -46,7 +54,12 @@ function* getBooksSaga() {
   try {
     yield put(pending());
     const token: string = yield select((state) => state.auth.token);
-    const books: BookType[] = yield call(BookService.getBooks, token);
+    const response: ResponseType = yield call(
+      BookService.getBooks,
+      token,
+      title
+    );
+    const books: BookType[] = response.documents;
 
     yield put(success(books));
   } catch (error) {

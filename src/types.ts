@@ -24,4 +24,8 @@ export interface AuthState {
   error: Error | null;
 }
 
-export interface BookType {}
+export interface BookType {
+  isbn: string;
+  title: string;
+  authors: string;
+}
