@@ -4,7 +4,11 @@ import { BookType } from "../types";
 
 interface BookProps extends BookType {}
 
-const Book: React.FC<BookProps> = ({ isbn: bookId, title, authors }) => (
+const Book: React.FC<BookProps> = ({
+  isbn: bookId,
+  title,
+  authors: author,
+}) => (
   <div>
     <div>
       <Link to={`/book/${bookId}`}>
@@ -12,9 +16,9 @@ const Book: React.FC<BookProps> = ({ isbn: bookId, title, authors }) => (
       </Link>
     </div>
     <div>
-      <Link to={`/book/${bookId}`}>{authors}</Link>
+      <Link to={`/book/${bookId}`}>{author}</Link>
     </div>
-    <div></div>
+    <div>{}</div>
   </div>
 );
 
