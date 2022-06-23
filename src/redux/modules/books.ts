@@ -1,7 +1,8 @@
+import { Action } from "redux";
 import { createActions, handleActions } from "redux-actions";
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import BookService from "../../services/BookService";
-import { BooksState, BookType } from "../../types";
+import { BookReqType, BooksState, BookType } from "../../types";
 
 // 작동여부 판단을 위한 임시 title(책 제목)값 고정
 const title: string = "스티브 잡스";
@@ -48,7 +49,9 @@ export default reducer;
 
 // saga
 
-export const { getBooks } = createActions("GET_BOOKS", { prefix });
+export const { getBooks, addBook } = createActions("GET_BOOKS", "ADD_BOOK", {
+  prefix,
+});
 
 function* getBooksSaga() {
   try {
@@ -67,6 +70,14 @@ function* getBooksSaga() {
   }
 }
 
+function* addBookSaga(action: Action<BookReqType>){
+  try{
+    yield put(pending());
+    const token: string = yield select(state=>state.auth.token);
+  }
+}
+
 export function* booksSaga() {
   yield takeLatest(`${prefix}/GET_BOOKS`, getBooksSaga);
+  yield takeEvery(`${prefix}/ADD_BOOK`, addBookSaga);
 }

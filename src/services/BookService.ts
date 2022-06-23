@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { KAKAO_DEVELOPERS_API_KEY as API_KEY } from "../api_key";
-import { BookType } from "../types";
+import { BookReqType, BookType } from "../types";
 
 // KAKAO DEVELOPERS API KEY (공개하지 말 것)
 const api_key = API_KEY;
@@ -26,5 +26,12 @@ export default class BookService {
 
     const response = await kakaoBook.get("/v3/search/book", { params });
     return response.data;
+  }
+
+  public static async addBook(
+    token: string,
+    book: BookReqType
+  ): Promise<BookType> {
+    const response = await axios.post(BOOK);
   }
 }
