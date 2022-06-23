@@ -28,4 +28,6 @@ export interface BookType {
   isbn: string;
   title: string;
   authors: string;
+  createdAt: string;
+  url: string;
 }
