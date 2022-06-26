@@ -1,3 +1,4 @@
+import { push } from "connected-react-router";
 import { Action } from "redux";
 import { createActions, handleActions } from "redux-actions";
 import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
@@ -31,6 +32,7 @@ const reducer = handleActions<BooksState, BookType[]>(
   {
     PENDING: (state) => ({ ...state, loading: true, error: null }),
     SUCCESS: (state, action) => ({
+      ...state,
       books: action.payload,
       loading: false,
       error: null,
@@ -63,17 +65,29 @@ function* getBooksSaga() {
       title
     );
     const books: BookType[] = response.documents;
+    const prevBooks: BookType[] = yield select((state) => state.books.books);
+    let newBooks: BookType[] = [];
 
-    yield put(success(books));
+    if (prevBooks !== null) {
+      newBooks = books.concat(prevBooks);
+    } else {
+      newBooks = books;
+    }
+
+    yield put(success(newBooks));
   } catch (error) {
     yield put(fail(new Error("UNKNOWN ERROR")));
   }
 }
 
-function* addBookSaga(action: Action<BookReqType>){
-  try{
+function* addBookSaga(action: any) {
+  try {
     yield put(pending());
-    const token: string = yield select(state=>state.auth.token);
+    const prevBooks: BookType[] = yield select((state) => state.books.books);
+    yield put(success([...prevBooks, action.payload]));
+    yield put(push("/"));
+  } catch (error) {
+    yield put(fail(new Error("UNKNOWN ERROR")));
   }
 }
 

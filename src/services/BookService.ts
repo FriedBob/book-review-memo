@@ -28,10 +28,11 @@ export default class BookService {
     return response.data;
   }
 
-  public static async addBook(
-    token: string,
-    book: BookReqType
-  ): Promise<BookType> {
-    const response = await axios.post(BOOK);
-  }
+  // public static async addBook(
+  //   token: string,
+  //   book: BookReqType
+  // ): Promise<BookType> {
+  //   // const response = await axios.post(BOOK);
+  //   const response: BookReqType = book;
+  // }
 }

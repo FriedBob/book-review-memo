@@ -7,10 +7,9 @@ import {
   PageHeader,
   message as messageDialog,
 } from "antd";
-import TextArea from "antd/lib/input/TextArea";
+import TextArea, { TextAreaRef } from "antd/lib/input/TextArea";
 import { useRef } from "react";
 import styles from "./Add.module.css";
-import TextAreaType from "rc-textarea";
 import { BookReqType } from "../types";
 
 interface AddProps {
@@ -23,7 +22,7 @@ interface AddProps {
 const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
   // adding Form Refs
   const titleRef = useRef<InputRef>(null);
-  const messageRef = useRef<TextAreaType>(null);
+  const messageRef = useRef<TextAreaRef>(null);
   const authorRef = useRef<InputRef>(null);
   const urlRef = useRef<InputRef>(null);
 
@@ -103,14 +102,15 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
 
   function click() {
     const title = titleRef.current!.input?.value;
-    const message = messageRef.current!.state.value;
-    const author = authorRef.current!.input?.value;
+    const message = messageRef.current!.resizableTextArea!.props
+      .value as string;
+    const authors = authorRef.current!.input?.value;
     const url = urlRef.current!.input?.value;
 
     if (
       title === undefined ||
       message === undefined ||
-      author === undefined ||
+      authors === undefined ||
       url === undefined
     ) {
       messageDialog.error("Please fill out all inputs");
@@ -120,7 +120,7 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
     add({
       title,
       message,
-      author,
+      authors,
       url,
     });
   }

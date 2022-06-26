@@ -35,6 +35,6 @@ export interface BookType {
 export interface BookReqType {
   title: string;
   message: string;
-  author: string;
+  authors: string;
   url: string;
 }
