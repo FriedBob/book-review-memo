@@ -39,6 +39,7 @@ export default function ListContainer() {
   const deleteBook = useCallback(
     (bookId: string) => {
       dispatch(deleteBookSagaStart(bookId));
+      console.log(`클릭시 이벤트 bookId : ${bookId}`);
     },
     [dispatch]
   );

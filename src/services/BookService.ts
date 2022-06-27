@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { KAKAO_DEVELOPERS_API_KEY as API_KEY } from "../api_key";
+import { deleteBook } from "../redux/modules/books";
 import { BookReqType, BookType } from "../types";
 
 // KAKAO DEVELOPERS API KEY (공개하지 말 것)
@@ -35,4 +36,10 @@ export default class BookService {
   //   // const response = await axios.post(BOOK);
   //   const response: BookReqType = book;
   // }
+
+  // public static async deleteBook(token: string, bookId: string){
+
+  // };
+
+  // 관련 API가 소실되어 자체 구현으로 대체
 }
