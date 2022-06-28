@@ -1,4 +1,4 @@
-import { goBack } from "connected-react-router";
+import { goBack, push } from "connected-react-router";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ const AddContainer = () => {
   );
 
   const back = useCallback(() => {
-    dispatch(goBack());
+    dispatch(push("/"));
   }, [dispatch]);
 
   const logout = useCallback(() => {
