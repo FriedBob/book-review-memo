@@ -5,13 +5,13 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { BookType } from "../types";
+import { BookType, deleteReqType } from "../types";
 import moment from "moment";
 import { Button, Tooltip } from "antd";
 import styles from "./Book.module.css";
 
 interface BookProps extends BookType {
-  deleteBook: (isbn: string) => void;
+  deleteBook: (req: deleteReqType) => void;
 }
 
 const Book: React.FC<BookProps> = ({
@@ -78,7 +78,9 @@ const Book: React.FC<BookProps> = ({
   );
 
   function clickDelete() {
-    deleteBook(isbn);
+    const req: deleteReqType = { isbn: isbn, title: title, authors: authors };
+
+    deleteBook(req);
   }
 };
 export default Book;

@@ -28,13 +28,20 @@ export interface BookType {
   isbn: string;
   title: string;
   authors: string;
+  contents: string;
   createdAt: string;
   url: string;
 }
 
 export interface BookReqType {
   title: string;
-  message: string;
+  contents: string;
   authors: string;
   url: string;
+}
+
+export interface deleteReqType {
+  isbn: string;
+  title: string;
+  authors: string;
 }

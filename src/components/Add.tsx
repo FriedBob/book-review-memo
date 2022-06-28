@@ -79,37 +79,37 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
             ref={authorRef}
           />
         </div>
-      </div>
-      <div className={styles.input_url}>
-        URL
-        <span className={styles.required}> *</span>
-      </div>
-      <div className={styles.input_area}>
-        <Input className={styles.input} placeholder="URL" ref={urlRef} />
-      </div>
-      <div className={styles.button_area}>
-        <Button
-          className={styles.button}
-          size="large"
-          loading={loading}
-          onClick={click}
-        >
-          Add
-        </Button>
+        <div className={styles.input_url}>
+          URL
+          <span className={styles.required}> *</span>
+        </div>
+        <div className={styles.input_area}>
+          <Input className={styles.input} placeholder="URL" ref={urlRef} />
+        </div>
+        <div className={styles.button_area}>
+          <Button
+            className={styles.button}
+            size="large"
+            loading={loading}
+            onClick={click}
+          >
+            Add
+          </Button>
+        </div>
       </div>
     </Layout>
   );
 
   function click() {
     const title = titleRef.current!.input?.value;
-    const message = messageRef.current!.resizableTextArea!.props
+    const contents = messageRef.current!.resizableTextArea!.props
       .value as string;
     const authors = authorRef.current!.input?.value;
     const url = urlRef.current!.input?.value;
 
     if (
       title === undefined ||
-      message === undefined ||
+      contents === undefined ||
       authors === undefined ||
       url === undefined
     ) {
@@ -119,7 +119,7 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
 
     add({
       title,
-      message,
+      contents,
       authors,
       url,
     });

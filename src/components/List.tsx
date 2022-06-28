@@ -1,7 +1,7 @@
 import { Button, PageHeader, Table } from "antd";
 import Layout from "antd/lib/layout/layout";
 import { useEffect } from "react";
-import { BookType } from "../types";
+import { BookType, deleteReqType } from "../types";
 import Book from "./Book";
 import styles from "./List.module.css";
 
@@ -12,7 +12,7 @@ interface ListProps {
   getBooks: () => void;
   logout: () => void;
   goAdd: () => void;
-  deleteBook: (isbn: string) => void;
+  deleteBook: (req: deleteReqType) => void;
 }
 
 const List: React.FC<ListProps> = ({

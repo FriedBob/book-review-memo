@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import List from "../components/List";
-import { BookType, RootState } from "../types";
+import { BookType, deleteReqType, RootState } from "../types";
 import {
   getBooks as getBooksSagaStart,
   deleteBook as deleteBookSagaStart,
@@ -37,9 +37,9 @@ export default function ListContainer() {
   }, [dispatch]);
 
   const deleteBook = useCallback(
-    (bookId: string) => {
-      dispatch(deleteBookSagaStart(bookId));
-      console.log(`클릭시 이벤트 bookId : ${bookId}`);
+    (req: deleteReqType) => {
+      dispatch(deleteBookSagaStart(req));
+      // console.log(`클릭시 이벤트 bookId : ${bookId}`);
     },
     [dispatch]
   );

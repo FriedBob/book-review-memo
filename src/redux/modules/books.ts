@@ -98,11 +98,25 @@ function* addBookSaga(action: any) {
 
 function* deleteBookSaga(action: any) {
   try {
-    const bookId = action.payload;
+    const bookId = action.payload.isbn;
+    const bookTitle = action.payload.title;
+    const bookAuthors = action.payload.authors;
+    console.log(`delete로 넘어간 action: ${action.payload}`);
+
     yield put(pending());
-    const token: string = yield select((state) => state.auth.token);
     const prevBooks: BookType[] = yield select((state) => state.books.books);
-    yield put(success(prevBooks.filter((book) => book.isbn !== bookId)));
+    if (bookId === undefined || bookId === null) {
+      // bookId가 없을경우 임시로 book의 title과 authors를 key로 사용
+      yield put(
+        success(
+          prevBooks.filter(
+            (book) => book.title !== bookTitle && book.authors !== bookAuthors
+          )
+        )
+      );
+    } else {
+      yield put(success(prevBooks.filter((book) => book.isbn !== bookId)));
+    }
   } catch (error) {
     yield put(fail(new Error("UNKNOWN ERROR")));
   }
