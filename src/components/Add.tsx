@@ -21,6 +21,7 @@ interface AddProps {
 
 const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
   // adding Form Refs
+  const isbnRef = useRef<InputRef>(null);
   const titleRef = useRef<InputRef>(null);
   const messageRef = useRef<TextAreaRef>(null);
   const authorRef = useRef<InputRef>(null);
@@ -49,6 +50,13 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
       />
 
       <div className={styles.add}>
+        <div className={styles.input_title}>
+          BookId
+          <span className={styles.required}> *</span>
+        </div>
+        <div className={styles.input_area}>
+          <Input className={styles.input} placeholder="BookId" ref={isbnRef} />
+        </div>
         <div className={styles.input_title}>
           Title
           <span className={styles.required}> *</span>
@@ -101,6 +109,7 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
   );
 
   function click() {
+    const isbn = isbnRef.current!.input?.value;
     const title = titleRef.current!.input?.value;
     const contents = messageRef.current!.resizableTextArea!.props
       .value as string;
@@ -108,6 +117,7 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
     const url = urlRef.current!.input?.value;
 
     if (
+      isbn === undefined ||
       title === undefined ||
       contents === undefined ||
       authors === undefined ||
@@ -118,6 +128,7 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
     }
 
     add({
+      isbn,
       title,
       contents,
       authors,

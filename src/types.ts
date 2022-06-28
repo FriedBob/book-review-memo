@@ -34,6 +34,7 @@ export interface BookType {
 }
 
 export interface BookReqType {
+  isbn: string;
   title: string;
   contents: string;
   authors: string;
