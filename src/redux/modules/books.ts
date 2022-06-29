@@ -101,13 +101,21 @@ function* addBookSaga(action: any) {
 
 function* editBookSaga(action: any) {
   try {
-    const bookId = action.payload.isbn;
-    yield put(pending());
+    const bookId: string = action.payload;
+    console.log(`삭제대상 Isbn : ${bookId}`);
     const prevBooks: BookType[] = yield select((state) => state.books.books);
-    yield put(success(prevBooks.filter((book) => book.isbn !== bookId)));
+
     yield put(pending());
+
+    // add
     yield put(success([...prevBooks, action.payload]));
     yield put(push("/"));
+
+    // delete
+    // const deleteBook = prevBooks.find((book) => book.isbn === bookId);
+    const prevBooks_2: BookType[] = yield select((state) => state.books.books);
+    yield put(pending());
+    yield put(success(prevBooks_2.filter((book) => book.isbn !== bookId)));
   } catch (error) {
     yield put(fail(new Error("UNKNOWN ERROR")));
   }

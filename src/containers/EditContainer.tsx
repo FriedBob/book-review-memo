@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { BookType, RootState } from "../types";
+import { BookReqType, BookType, RootState } from "../types";
 import {
   editBook as editBookSaga,
   getBooks as getBooksSaga,
@@ -30,10 +30,10 @@ const EditContainer = () => {
   }, [dispatch]);
 
   const edit = useCallback(
-    (book: any) => {
-      dispatch(editBookSaga(bookId, book));
+    (book: BookReqType) => {
+      dispatch(editBookSaga(book));
     },
-    [dispatch, bookId]
+    [dispatch]
   );
 
   const back = useCallback(() => {
