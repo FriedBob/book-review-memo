@@ -75,9 +75,11 @@ function* getBooksSaga() {
     let newBooks: BookType[] = [];
 
     if (prevBooks !== null) {
-      newBooks = books.concat(prevBooks);
+      // store에 저장된 자료가 있을경우
+      newBooks = newBooks.concat(prevBooks);
     } else {
-      newBooks = books;
+      // store에 이미 저장된 자료가 없을경우
+      newBooks = newBooks.concat(books);
     }
 
     yield put(success(newBooks));
@@ -105,6 +107,7 @@ function* editBookSaga(action: any) {
     yield put(success(prevBooks.filter((book) => book.isbn !== bookId)));
     yield put(pending());
     yield put(success([...prevBooks, action.payload]));
+    yield put(push("/"));
   } catch (error) {
     yield put(fail(new Error("UNKNOWN ERROR")));
   }
