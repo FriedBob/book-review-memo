@@ -1,55 +1,60 @@
-import { useCallback, useEffect } from "react";
+import { push } from "connected-react-router";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BookType, RootState } from "../types";
-import { getBooks as getBooksSaga } from "../redux/modules/books";
+import {
+  editBook as editBookSaga,
+  getBooks as getBooksSaga,
+} from "../redux/modules/books";
 import { logout as logoutSaga } from "../redux/modules/auth";
-import Detail from "../components/Detail";
-import { goBack, push } from "connected-react-router";
+import Edit from "../components/Edit";
 
-const DetailContainer = () => {
-  // page url로 받아오는 :id
+const EditContainer = () => {
   const { id } = useParams();
-  // const navigate = useNavigate();
-  // bookId = isbn (String type)
   const bookId = String(id) || "unknown";
   const books = useSelector<RootState, BookType[] | null>(
     (state) => state.books.books
   );
+  const loading = useSelector<RootState, boolean>(
+    (state) => state.books.loading
+  );
   const error = useSelector<RootState, Error | null>(
     (state) => state.books.error
   );
-
   const dispatch = useDispatch();
 
   const getBooks = useCallback(() => {
     dispatch(getBooksSaga());
   }, [dispatch]);
 
+  const edit = useCallback(
+    (book: any) => {
+      dispatch(editBookSaga(bookId, book));
+    },
+    [dispatch, bookId]
+  );
+
   const back = useCallback(() => {
-    // navigate(-1);
     dispatch(push("/"));
   }, [dispatch]);
-
-  const edit = useCallback(() => {
-    dispatch(push(`/edit/${id}`));
-  }, [dispatch, id]);
 
   const logout = useCallback(() => {
     dispatch(logoutSaga());
   }, [dispatch]);
 
   return (
-    <Detail
+    <Edit
       book={books === null ? null : books.find((book) => book.isbn === bookId)}
+      loading={loading}
       error={error}
+      edit={edit}
       getBooks={getBooks}
       back={back}
-      edit={edit}
       logout={logout}
     />
   );
 };
 
-export default DetailContainer;
+export default EditContainer;

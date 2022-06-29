@@ -51,10 +51,11 @@ export default reducer;
 
 // saga
 
-export const { getBooks, addBook, deleteBook } = createActions(
+export const { getBooks, addBook, deleteBook, editBook } = createActions(
   "GET_BOOKS",
   "ADD_BOOK",
   "DELETE_BOOK",
+  "EDIT_BOOK",
   {
     prefix,
   }
@@ -96,6 +97,19 @@ function* addBookSaga(action: any) {
   }
 }
 
+function* editBookSaga(action: any) {
+  try {
+    const bookId = action.payload.isbn;
+    yield put(pending());
+    const prevBooks: BookType[] = yield select((state) => state.books.books);
+    yield put(success(prevBooks.filter((book) => book.isbn !== bookId)));
+    yield put(pending());
+    yield put(success([...prevBooks, action.payload]));
+  } catch (error) {
+    yield put(fail(new Error("UNKNOWN ERROR")));
+  }
+}
+
 function* deleteBookSaga(action: any) {
   try {
     const bookId = action.payload.isbn;
@@ -126,4 +140,5 @@ export function* booksSaga() {
   yield takeLatest(`${prefix}/GET_BOOKS`, getBooksSaga);
   yield takeEvery(`${prefix}/ADD_BOOK`, addBookSaga);
   yield takeEvery(`${prefix}/DELETE_BOOK`, deleteBookSaga);
+  yield takeEvery(`${prefix}/EDIT_BOOK`, editBookSaga);
 }

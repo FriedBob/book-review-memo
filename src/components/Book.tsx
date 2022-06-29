@@ -12,6 +12,7 @@ import styles from "./Book.module.css";
 
 interface BookProps extends BookType {
   deleteBook: (req: deleteReqType) => void;
+  goEdit: (bookId: string) => void;
 }
 
 const Book: React.FC<BookProps> = ({
@@ -21,6 +22,7 @@ const Book: React.FC<BookProps> = ({
   createdAt,
   url,
   deleteBook,
+  goEdit,
 }) => {
   return (
     <div className={styles.book}>
@@ -60,6 +62,7 @@ const Book: React.FC<BookProps> = ({
             size="small"
             shape="circle"
             icon={<EditOutlined />}
+            onClick={clickEdit}
           />
         </Tooltip>
         <Tooltip title="Delete">
@@ -77,6 +80,9 @@ const Book: React.FC<BookProps> = ({
     </div>
   );
 
+  function clickEdit() {
+    goEdit(isbn);
+  }
   function clickDelete() {
     const req: deleteReqType = { isbn: isbn, title: title, authors: authors };
 
