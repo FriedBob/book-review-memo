@@ -85,6 +85,15 @@ Note: `package.json` 에 관련 dependency가 등록되어 있습니다.
 npm install
 ```
 
+&nbsp;
+
+이후 프로젝트를 실행하기 위해서 다음 코드를 터미널 상에서 입력합니다.
+
+```
+npm start
+npx json-server ./localDB.json --port 5500
+```
+
 &nbsp;&nbsp;
 
 # <div style="text-align:center">🖊️ Script</div>
